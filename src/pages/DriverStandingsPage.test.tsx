@@ -20,4 +20,13 @@ describe('DriverStandingsPage', () => {
     expect(within(row).getByText(String(leader!.points))).toBeInTheDocument()
     expect(within(row).getByText(String(leader!.wins))).toBeInTheDocument()
   })
+
+  it('driver names link to their profile', () => {
+    renderAt('/standings/drivers')
+    const [leader] = driverStandings(season.races)
+    const d = driverById(leader!.id)!
+    const row = within(screen.getByRole('table')).getAllByRole('row')[1]!
+    const link = within(row).getByRole('link', { name: `${d.givenName} ${d.familyName}` })
+    expect(link).toHaveAttribute('href', `/drivers/${leader!.id}`)
+  })
 })
