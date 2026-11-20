@@ -34,6 +34,17 @@ test('constructor standings opens from the nav and ranks constructors', async ({
   await expect(page.getByRole('row').nth(1).getByRole('cell').first()).toHaveText('1')
 })
 
+test('driver profile shows the driver heading and results', async ({ page }) => {
+  await page.goto('/drivers/norris')
+  await expect(page.getByRole('heading', { name: 'Lando Norris' })).toBeVisible()
+  await expect(page.getByRole('table')).toBeVisible()
+})
+
+test('unknown driver shows a not-found message', async ({ page }) => {
+  await page.goto('/drivers/nobody')
+  await expect(page.getByRole('heading', { name: 'Driver not found' })).toBeVisible()
+})
+
 test('unknown race shows a not-found message', async ({ page }) => {
   await page.goto('/races/99')
   await expect(page.getByRole('heading', { name: 'Race not found' })).toBeVisible()
