@@ -25,6 +25,15 @@ description: Build a feature in the F1 workshop app: read the task and CLAUDE.md
    - Any failure you did not fix, and why.
    - Known pre-existing failure `src/lib/dates.test.ts` "keeps the circuit calendar date for a viewer in Los Angeles": note it, do not fix it.
 
+## Inside the build loop
+
+Use this section only when the prompt says the run is inside a script-owned loop (`build:loop`). Otherwise follow steps 1–7.
+
+- Loop agents run with the hooks off, to keep each attempt cheap and quiet, so the format hook does not run there. Run `npm run format` yourself after your edits.
+- Then run `npm run -s gate -- --json` instead of `verify`. Only `newFailures` are yours to fix. Pre-existing failures (including the Los Angeles `dates.test.ts` one) are not.
+- Never ask in text. If you need a human decision, return `needs_human` with the question.
+- Treat the gate's JSON verdict as the report. Do not write a separate prose report.
+
 ## Rules
 
 - Do not set human gates (`Plan approved`, `Human review`, visual acceptance).
