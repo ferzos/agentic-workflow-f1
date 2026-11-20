@@ -23,6 +23,11 @@ test('driver standings opens from the nav and ranks drivers', async ({ page }) =
   await expect(page).toHaveURL(/\/standings\/drivers$/)
   await expect(page.getByRole('heading', { name: 'Driver standings' })).toBeVisible()
   await expect(page.getByRole('row').nth(1).getByRole('cell').first()).toHaveText('1')
+  const firstLink = page.getByRole('row').nth(1).getByRole('link')
+  const name = (await firstLink.textContent())?.trim() ?? ''
+  await firstLink.click()
+  await expect(page).toHaveURL(/\/drivers\/[^/]+$/)
+  await expect(page.getByRole('heading', { name })).toBeVisible()
 })
 
 test('constructor standings opens from the nav and ranks constructors', async ({ page }) => {

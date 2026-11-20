@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { Table, Td, Th } from '@/components/ui/table'
 import { driverById, season } from '@/data/season'
 import { driverStandings } from '@/lib/standings'
@@ -23,7 +24,11 @@ export function DriverStandingsPage() {
             return (
               <tr key={r.id}>
                 <Td>{r.position}</Td>
-                <Td>{d ? `${d.givenName} ${d.familyName}` : r.id}</Td>
+                <Td>
+                  <Link className="underline" to={`/drivers/${r.id}`}>
+                    {d ? `${d.givenName} ${d.familyName}` : r.id}
+                  </Link>
+                </Td>
                 <Td>{r.points}</Td>
                 <Td>{r.wins}</Td>
               </tr>
