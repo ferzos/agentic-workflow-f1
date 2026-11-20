@@ -17,6 +17,14 @@ test('calendar lists the season and opens a race', async ({ page }) => {
   await expect(page.getByRole('row')).toHaveCount(21)
 })
 
+test('driver standings opens from the nav and ranks drivers', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Drivers' }).click()
+  await expect(page).toHaveURL(/\/standings\/drivers$/)
+  await expect(page.getByRole('heading', { name: 'Driver standings' })).toBeVisible()
+  await expect(page.getByRole('row').nth(1).getByRole('cell').first()).toHaveText('1')
+})
+
 test('unknown race shows a not-found message', async ({ page }) => {
   await page.goto('/races/99')
   await expect(page.getByRole('heading', { name: 'Race not found' })).toBeVisible()
