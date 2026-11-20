@@ -14,7 +14,7 @@ export interface DriverProfile {
   driverId: string
   points: number
   wins: number
-  constructorId: string | undefined
+  constructorId?: string
   results: DriverRaceResult[]
 }
 
